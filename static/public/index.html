@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Kopf-Kultur</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="static/public/img/kopfkultur/kk_favicon.png" />
+
+    <!-- Bootstrap -->
+    <link href="static/public/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="static/public/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="static/public/css/bootstrap-image-gallery.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="static/public/css/kopfkultur.css" rel="stylesheet" media="screen">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.js"></script>
+    <script src="static/public/js/kopfkultur.js"></script>
+</head>
+
+<body ng-app='kopfkultur'>
+
+<!-- +++++++++++++++ NAVBAR +++++++++++++++++ -->
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="kk-brand navbar-brand " href="#">
+                <img src="static/public/img/kopfkultur/kopfkultur_logo_bw_64.png" alt="">
+                Kopf-Kultur
+            </a>
+        </div>
+        <div class="navbar-collapse collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a class="dropdown-toggle kk-anchor kk-icon-link" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                        Galerien
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#/galeries/hats">Hüte & Mützen</a></li>
+                        <li><a href="#/galeries/headpieces">Kopfschmuck</a></li>
+                        <li><a href="#/galeries/bridal">Braut</a></li>
+                        <!--<li><a href="#/galeries/kids">Kinder</a></li>-->
+                    </ul>
+                </li>
+                <li><a href="#about" class="kk-icon-link"><span class="glyphicon glyphicon-user"></span> Über mich</a></li>
+                <li><a href="#contact" class="kk-icon-link"><span class="glyphicon glyphicon-envelope"></span> Impressum</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <!--<li><a href="#contact"><i class="icon-pencil"></i> Blog</a></li>-->
+                <li><a href="http://www.facebook.com/kopf.kultur.1"  target="_blank" class="kk-icon-link"data-toggle="tooltip" title="Facebook">
+                    <i class="fa fa-facebook fa-lg"></i>
+                </a></li>
+                <li><a href="http://www.pinterest.com/kopfkultur/" target="_blank" class="kk-icon-link" data-toggle="tooltip" title="Pinterest">
+                    <i class="fa fa-pinterest fa-lg"></i>
+                </a></li>
+                <li><a class="kk-icon-link" href="#shop"> <!--href="http://de.dawanda.com/shop/miapia" target="_blank" -->
+                    <span class="glyphicon glyphicon-shopping-cart"></span> Online-Shop</a>
+                </li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
+
+
+
+<!-- ------   HEADER    ----------- -->
+
+<div class="kk-header">
+    <img class="kk-logo" src="static/public/img/kopfkultur/kopfkultur_logo.png" alt="">
+    <div class="kk-heading">Kopf-Kultur</div>
+</div>
+
+<!-- ------  ^ HEADER ^   ----------- -->
+<div ng-controller="KopfKulturController">
+    <div ng-view></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="pull-right">
+        &copy; 2014 Anja Ernst - Kopf-Kultur
+    </div>
+</footer>
+
+
+<!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+<div id="blueimp-gallery" class="blueimp-gallery kk-modal-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4>kopf-kultur</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="carousel-control pull-left prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </div>
+                    <div class="carousel-control right pull-right next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="gallery-img-title">
+                        <h3 class="modal-title"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Le javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="static/public/js/bootstrap.min.js"></script>
+<script src="static/public/js/jquery.blueimp-gallery.min.js"></script>
+<script src="static/public/js/bootstrap-image-gallery.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<div class="action-bar-container">
+  <div class="action-bar">
+    <div class="col-sm-6 action-bar-text">
+      <span>Galarien-Artikel Bearbeiten</span>
+    </div>
+    <div class="col-sm-6">
+      <button type="button" class="btn btn-primary btn-sm btn-material-deeppurple mdi-content-save pull-right" ng-click="saveGalerie()"> Galerie speichern</button>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-repeat="section in galerie.sections">
+  <div class="col-sm-12">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4>{{section.name}}</h4>
+      </div>
+      <div class="col-sm-6">
+        <button type="button" class="btn btn-primary btn-sm btn-material-deeppurple mdi-content-add-box pull-right" ng-click="showAddItemDialog(section)"> Artikel hinzufügen</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <table class="table table-hover">
+          <thead>
+            <tr><th>#</th><th>Name</th><th>Bild</th><th>Aktion</th></tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in section.items | orderBy: 'position'">
+              <td>{{item.position}}</td>
+              <td style="width: 35%">{{item.name}}</td>
+              <td><img ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" style="height: 100px;"/></td>
+              <td>
+                <a ng-click="showItemDeleteConfirm(item)"><span class="mdi-content-clear" title="Löschen"></span></a>
+                <a ng-click="itemUp(section, item)"><span class="mdi-navigation-expand-less" title="Hoch"></span></a>
+                <a ng-click="itemDown(section, item)"><span class="mdi-navigation-expand-more" title="Runter"></span></a>
+              </td>
+              <td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Item Dialog -->
+<div class="modal fade" id="addItemDialog" tabindex="-1" role="dialog" aria-labelledby="addItemDialogLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="addItemDialogLabel"><span class="mdi-content-add-box"></span> Artikel hinzufügen</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row well">
+          <div class="col-sm-12">
+            <form role="form" name="addItemForm">
+              <div class="input-group col-sm-12">
+                <input type="text" class="form-control" placeholder="Artikelname" ng-model="itemQuery">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <table class="table table-hover" style="display: block; max-height: 450px; overflow-y: scroll;">
+              <tbody>
+                <tr ng-repeat="result in searchResults">
+                  <td style="vertical-align: middle; width: 60%;">
+                    {{result.name}}
+                  </td>
+                  <td style="vertical-align: middle; width: 30%;">
+                    <img ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" style="height: 100px;"/>
+                  </td>
+                  <td style="vertical-align: middle;">
+                    <a ng-click="addItem(result)" class="btn btn-default btn-fab btn-raised mdi-content-add"></span></a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Item Delete Confirm Modal -->
+<confirm-dialog confirm="deleteItem(item)" id="deleteItemDialog">
+  Soll der Artikel '{{item.name}}' wirklich entfernt werden?
+</confirm-dialog>

@@ -1,0 +1,268 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  color: #5a5a5a;
+}
+
+a {
+  color: #5a5a5a;
+}
+
+a:hover, a:focus {
+  color: #5a5a5a;
+  text-decoration: none;
+}
+
+/*  Header  */
+
+.kk-header {
+  margin-top: 60px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.kk-logo {
+  padding-top: 5px;
+  width: 100px;
+  opacity:0.8;
+}
+
+.kk-heading {
+  font-family: 'Great Vibes', cursive;
+  font-size: 40pt;
+  font-weight: normal;
+  line-height: 60px;
+}
+
+.kk-anchor {
+  cursor: pointer;
+}
+
+
+/* CUSTOMIZE THE NAVBAR
+-------------------------------------------------- */
+.kk-brand {
+  font-family: 'Great Vibes', cursive;
+  padding-bottom: 0;
+  padding-top: 10px;
+}
+
+.kk-brand:hover{
+  color: #a181a6;
+}
+
+.kk-brand img {
+  width: 32px;
+  vertical-align: middle;
+}
+
+.navbar-default .navbar-nav li .kk-icon-link:hover {
+  color: #a181a6;
+}
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 60px;
+}
+
+.carousel .container {
+  position: relative;
+  z-index: 9;
+}
+
+#kk-Carousel .carousel-caption {
+  left: 0;
+  bottom: 0;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+#kk-Carousel .carousel-control {
+  background: none;
+  color: #5a5a5a;
+}
+
+
+.carousel .item {
+  height: 300px;
+}
+.carousel img {
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  min-width: 1200px;
+}
+
+.carousel-caption {
+  background-color: transparent;
+  /*position: static;*/
+  max-width: 550px;
+  /*padding: 0 20px;*/
+  margin-top: 10px;
+}
+.carousel-caption h1,
+.carousel-caption .lead {
+  margin: 0;
+  line-height: 1.25;
+  color: #fff;
+  text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+.carousel-caption h1 {
+  font-size: 40pt;
+  font-weight: normal;
+  font-family: 'Great Vibes', cursive;
+}
+
+.carousel-caption .btn {
+  margin-top: 10px;
+}
+
+
+
+/* TEASER CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.teaser .col-xs-4 {
+  text-align: center;
+}
+.teaser h2 {
+  font-family: 'Great Vibes', cursive;
+  font-weight: normal;
+}
+.teaser .col-xs-3 p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.teaser-img {
+  margin-left: auto;
+  margin-right: auto;
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
+}
+
+.teaser-img img{
+  margin-left: auto;
+  margin-right: auto;
+  width: 140px;
+  height: 140px;
+}
+
+/* --------------- GALERIE --------------*/
+
+.kk-modal-gallery .carousel-control {
+  background: none;
+  color: #5a5a5a;
+}
+
+.galerie-header {
+  padding-left: 100px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+
+  background-color: #f6f6f6;
+}
+
+.galerie-header ul {
+  margin-left: -100px;
+  text-align: center;
+  list-style: none;
+}
+
+.galerie-header li {
+  display: inline;
+  padding-right: 20px;
+  font-size: 14pt;
+}
+
+.galerie-header a {
+  color: #5a5a5a;
+}
+
+.galerie {
+
+}
+
+.galerie-section {
+  margin-top: 40px;
+}
+
+.galerie-section h3 {
+  display: inline;
+  padding-right: 20px;
+  font-family: 'Great Vibes', cursive;
+  font-weight: normal;
+  font-size: 30pt;
+}
+
+.galerie .row {
+  margin-bottom: 20px;
+}
+
+.gallery-img {
+  width: 140px;
+  height: 140px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-img-title {
+  text-align: center;
+}
+
+.site-header {
+  padding-left: 100px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
+
+  background-color: #f6f6f6;
+}
+
+/* ----------- Featurettes ------------------ */
+
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+.featurette {
+  padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden; /* Vertically center images part 2: clear their floats. */
+}
+.featurette-image {
+  width: 350px;
+  margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+  margin-right: 40px;
+}
+.featurette-image.pull-right {
+  margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-family: 'Great Vibes', cursive;
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+
+footer {
+  margin-top: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+
+

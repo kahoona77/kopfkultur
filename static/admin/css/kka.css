@@ -1,0 +1,68 @@
+@import "../lib/angular-upload/src/directives/btnUpload.min.css";
+
+body {
+
+}
+
+a {
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.action-bar-container {
+  height: 60px;
+}
+
+.action-bar {
+  background-color: white;
+  padding: 1px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+  font-size: 18px;
+}
+
+.action-bar-text {
+  padding-top: 14px;
+}
+
+.md-table {
+  min-width: 100%;
+  border-collapse: collapse;
+}
+
+.md-table tbody tr:hover, .md-table tbody tr:focus {
+  cursor:pointer;
+  background-color:rgba(63,81,181,0.2);
+}
+
+.md-table-header {
+  border-bottom: 1px solid rgb(230,230,230);
+  color: rgb(130,130,130);
+  text-align: left;
+  font-size: 0.75em;
+  font-weight: 700;
+  padding: 16px 16px 16px 0;
+}
+
+.md-table-header a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.md-table-content {
+  white-space: nowrap;
+  font-size: 0.8em;
+  padding: 16px 16px 16px 0;
+  height: 72px;
+}
+
+.md-table-td-more {
+  max-width:72px;
+  width:72px;
+  padding:16px;
+}

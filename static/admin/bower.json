@@ -1,0 +1,27 @@
+{
+  "name": "kopf-kultur admin",
+  "version": "0.0.0",
+  "authors": [
+    "benjamin.ernst <benjamin.ernst@gmail.de>"
+  ],
+  "description": "kopf-kultur admin",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "1.6.0",
+    "angular": "1.3.1",
+    "angular-route": "1.3.14",
+    "angular-animate": "1.3.14",
+    "angular-aria": "1.3.14",
+    "angular-material": "0.8.3",
+    "angular-upload": "~1.0.11"
+  }
+}
