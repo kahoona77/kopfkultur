@@ -3,10 +3,10 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', '$mdDialog', '$mdBottomSheet', function($scope, $location, $http, msg, $mdDialog, $mdBottomSheet) {
+controller('GaleriesCtrl', ['$scope', '$location', 'galerieService', 'msg', '$mdDialog', '$mdBottomSheet', function($scope, $location, galerieService, msg, $mdDialog, $mdBottomSheet) {
 
   $scope.loadGaleries = function () {
-    $http.get('/api/galeries/loadGalleries').success(function(response){
+    galerieService.loadGaleries().then(function(response){
       if (response.status == 'ok') {
         $scope.galeries = response.data;
       } else {
@@ -21,7 +21,11 @@ controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', '$mdDialog', 
   };
 
   $scope.editGalerie = function (galerie) {
-    $location.path('/galerie/' + galerie.id);
+    $location.path('/galerie/' + galerie.$id);
+  };
+
+  $scope.editItems = function (galerie) {
+    $location.path('/galerieItems/' + galerie.$id);
   };
 
   $scope.showBottomSheet = function(galerie, $event) {
@@ -43,14 +47,12 @@ controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', '$mdDialog', 
   };
 
   $scope.deleteGalerie = function (galerie) {
-    $http.post('/api/galeries/delete', {galerie: $scope.galerie}).success(function (response) {
-      if (response.status = 'ok') {
+    galerieService.removeGalerie(galerie).then(function(response){
+      if (response.status == 'ok') {
         $scope.loadGaleries();
       } else {
-        msg.error(response.status);
+        msg.error (response.status);
       }
-    }).error(function (response) {
-      msg.error(response);
     });
   };
 
@@ -63,11 +65,6 @@ controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', '$mdDialog', 
       $scope.deleteGalerie (galerie);
     });
   };
-
-  $scope.editItems = function (galerie) {
-    $location.path('/galerieItems/' + galerie.id);
-  };
-
 }])
 .controller('BottomSheetCtrl', function($scope, $mdBottomSheet) {
   $scope.itemClick = function(clickedItem) {

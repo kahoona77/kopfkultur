@@ -3,10 +3,10 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('GalerieItemsCtrl', ['$scope', '$location', '$http', '$routeParams', 'msg', '$mdDialog', function($scope, $location, $http, $routeParams, msg, $mdDialog) {
+controller('GalerieItemsCtrl', ['$scope', '$location', 'galerieService', '$routeParams', 'msg', '$mdDialog', function($scope, $location, galerieService, $routeParams, msg, $mdDialog) {
 
     $scope.loadGalerie = function (galerieId) {
-      $http.get('/api/galeries/get/' + galerieId).success(function(response){
+      galerieService.loadGalerie(galerieId).then(function(response){
         if (response.status == 'ok') {
           $scope.galerie = response.data;
           angular.forEach($scope.galerie.sections, function(section) {

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="/admin/">
+    <base href="/static/admin/">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +36,7 @@
         </md-item>
         <md-item>
           <md-item-content>
-            <md-button href="galeries" class="md-primary">Artikel</md-button>
+            <md-button href="items" class="md-primary">Artikel</md-button>
           </md-item-content>
         </md-item>
       </md-list>
@@ -63,12 +63,23 @@
 <script src="/static/admin/lib/angular-material/angular-material.js"></script>
 <script src="/static/admin/lib/angular-upload/angular-upload.min.js"></script>
 
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+
 <script src="/static/admin/js/app.js"></script>
 <script src="/static/admin/js/directives.js"></script>
+<script src="/static/admin/js/services/messageService.js"></script>
+
 <script src="/static/admin/js/controllers/GaleriesCtrl.js"></script>
 <script src="/static/admin/js/controllers/GalerieEditCtrl.js"></script>
 <script src="/static/admin/js/controllers/GalerieItemsCtrl.js"></script>
-<script src="/static/admin/js/services/messageService.js"></script>
+<script src="/static/admin/js/services/galerieService.js"></script>
+
+<script src="/static/admin/js/controllers/ItemsCtrl.js"></script>
+<script src="/static/admin/js/controllers/ItemEditCtrl.js"></script>
+<script src="/static/admin/js/services/itemService.js"></script>
 
 </body>
 </html>

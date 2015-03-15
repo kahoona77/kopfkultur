@@ -3,94 +3,65 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('ItemsCtrl', ['$scope', '$location', '$http', 'msg', function($scope, $location, $http, msg) {
+controller('ItemsCtrl', ['$scope', '$location', 'itemService', 'msg', '$mdDialog', '$mdBottomSheet', function($scope, $location, itemService, msg, $mdDialog, $mdBottomSheet) {
 
-  $scope.loadGaleries = function () {
-    $http.get('/api/galeries/loadAll').success(function(response){
+  $scope.loadItems = function () {
+    itemService.loadItems().then(function(response){
       if (response.status == 'ok') {
-        $scope.galeries = response.galeries;
+        $scope.items = response.data;
       } else {
         msg.error (response.status);
       }
     });
   };
-  $scope.loadGaleries();
+  $scope.loadItems();
 
-  $scope.addGalerie = function () {
-    var galerie = {};
-    $scope.galeries.push (galerie);
-    $scope.editGalerie (galerie);
+  $scope.addItem = function () {
+    $location.path('/item');
   };
 
-  $scope.editGalerie = function (galerie) {
-    $scope.galerie = galerie;
-    $('#galerieDialog').modal('show');
+  $scope.editItem = function (item) {
+    $location.path('/item/' + item.$id);
   };
 
-  $scope.saveGalerie = function (galerie) {
-    $http.post('/api/galeries/save', {galerie: $scope.galerie}).success(function (response) {
-      if (response.status = 'ok') {
-        $scope.loadGaleries();
-        $scope.galerie = undefined;
-        $('#galerieDialog').modal('hide');
-      } else {
-        msg.error(response.status);
+
+  $scope.showBottomSheet = function(item, $event) {
+    $mdBottomSheet.show({
+      templateUrl: '/static/admin/partials/itemsBottomSheet.html',
+      controller: 'BottomSheetCtrl',
+      targetEvent: $event
+    }).then(function(clickedItem) {
+      if (clickedItem == 'edit') {
+        $scope.editItem (item);
+      }
+      if (clickedItem == 'delete') {
+        $scope.showItemDeleteConfirm (item);
       }
     });
   };
 
-  $scope.deleteGalerie = function (galerie) {
-    $http.post('/api/galeries/delete', {galerie: $scope.galerie}).success(function (response) {
-      if (response.status = 'ok') {
-        $scope.loadGaleries();
+  $scope.deleteItem = function (item) {
+    itemService.removeItem(item).then(function(response){
+      if (response.status == 'ok') {
+        $scope.loadItems();
       } else {
-        msg.error(response.status);
+        msg.error (response.status);
       }
     });
   };
 
-  $scope.showGalerieDeleteConfirm = function (galerie) {
-    $scope.galerie = galerie;
-    $('#deleteGalerieDialog').modal('show');
+  $scope.showItemDeleteConfirm = function (item) {
+    var confirm = $mdDialog.confirm()
+      .title('Soll der Artikel "' + item.name + '" wirklich gelöscht werden?')
+      .ok('Ok')
+      .cancel('Abbrechen');
+    $mdDialog.show(confirm).then(function() {
+      $scope.deleteItem (item);
+    });
   };
-
-  $scope.addSection = function () {
-    if (!$scope.galerie.sections) {
-      $scope.galerie.sections = [];
-    }
-
-    var section = {position: ($scope.galerie.sections.length + 1) };
-    $scope.galerie.sections.push (section);
+}])
+.controller('BottomSheetCtrl', function($scope, $mdBottomSheet) {
+  $scope.itemClick = function(clickedItem) {
+    $mdBottomSheet.hide(clickedItem);
   };
-
-  $scope.deleteSection = function (section) {
-    //TODO
-    $scope.section = undefined;
-  };
-
-  $scope.showSectionDeleteConfirm = function (section) {
-    $scope.section = section;
-    $('#deleteSectionDialog').modal('show');
-  };
-
-  $scope.sectionUp = function (section) {
-    var previous = _.find($scope.galerie.sections, function(sec){ return sec.position == (section.position - 1); });
-    if (previous) {
-      previous.position++;
-      section.position--;
-    }
-  };
-
-  $scope.sectionDown = function (section) {
-    var next = _.find($scope.galerie.sections, function(sec){ return sec.position == (section.position + 1); });
-    if (next) {
-      next.position--;
-      section.position++;
-    }
-  };
-
-  $scope.editItems = function (galerie) {
-    $location.path('/galerieItems/' + galerie.id);
-  };
-
-}]);
+});

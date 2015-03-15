@@ -3,10 +3,10 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('GalerieEditCtrl', ['$scope', '$location', '$http', '$routeParams', '$mdDialog', function($scope, $location, $http, $routeParams, $mdDialog) {
+controller('GalerieEditCtrl', ['$scope', '$location', 'galerieService', '$routeParams', '$mdDialog', function($scope, $location, galerieService, $routeParams, $mdDialog) {
 
   $scope.loadGalerie = function (galerieId) {
-    $http.get('/api/galeries/get/' + galerieId).success(function(response){
+    galerieService.loadGalerie(galerieId).then(function(response){
       if (response.status == 'ok') {
         $scope.galerie = response.data;
       } else {
@@ -18,7 +18,7 @@ controller('GalerieEditCtrl', ['$scope', '$location', '$http', '$routeParams', '
   $scope.loadGalerie ($routeParams.galerieId);
 
   $scope.saveGalerie = function (galerie) {
-    $http.post('/api/galeries/save', {galerie: $scope.galerie}).success(function (response) {
+    galerieService.saveGalerie(galerie).then(function (response) {
       if (response.status = 'ok') {
         $location.path('/galeries');
       } else {
