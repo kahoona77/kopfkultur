@@ -28,7 +28,16 @@
       <div layout="row">
         <h4>Bild</h4>
       </div>
-
+      <div id="fileDrop" ng-file-drop ng-file-select ng-model="files" ng-model-rejected="rejFiles"
+      drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+      class="drop-box" ng-multiple="false" allow-dir="true" ng-accept="'image/*'">
+          <p>Bilder hier ablegen</p>
+          <p>oder</p>
+          <p>Klicken zum Auswählen</p>
+          <canvas id="canvas" width="600">
+             Browser missing HTML5 support.
+          </canvas>
+        </div>
     </md-content>
   </form>
 </md-content>

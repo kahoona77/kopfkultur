@@ -9,10 +9,10 @@ angular.module('kka', [
   'ngAnimate',
   'ngMaterial',
   'firebase',
+  'angularFileUpload',
   'kka.services',
   'kka.directives',
-  'kka.controllers',
-  'lr.upload'
+  'kka.controllers'
 ]).config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
   $locationProvider.html5Mode(true);
