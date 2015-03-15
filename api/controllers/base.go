@@ -5,10 +5,10 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/kahoona77/kopfkultur/api"
+	"github.com/kahoona77/kopfkultur/api/response"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
-	"rhcloud.com/kahoona77/kopfkultur/api"
-	"rhcloud.com/kahoona77/kopfkultur/api/response"
 )
 
 //InitRoutes - inits all controller routes

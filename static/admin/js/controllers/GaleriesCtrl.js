@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', function($scope, $location, $http, msg) {
+controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', '$mdDialog', '$mdBottomSheet', function($scope, $location, $http, msg, $mdDialog, $mdBottomSheet) {
 
   $scope.loadGaleries = function () {
     $http.get('/api/galeries/loadGalleries').success(function(response){
@@ -17,24 +17,27 @@ controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', function($sco
   $scope.loadGaleries();
 
   $scope.addGalerie = function () {
-    var galerie = {};
-    $scope.galeries.push (galerie);
-    $scope.editGalerie (galerie);
+    $location.path('/galerie');
   };
 
   $scope.editGalerie = function (galerie) {
-    $scope.galerie = galerie;
-    $('#galerieDialog').modal('show');
+    $location.path('/galerie/' + galerie.id);
   };
 
-  $scope.saveGalerie = function (galerie) {
-    $http.post('/api/galeries/save', {galerie: $scope.galerie}).success(function (response) {
-      if (response.status = 'ok') {
-        $scope.loadGaleries();
-        $scope.galerie = undefined;
-        $('#galerieDialog').modal('hide');
-      } else {
-        msg.error(response.status);
+  $scope.showBottomSheet = function(galerie, $event) {
+    $mdBottomSheet.show({
+      templateUrl: '/static/admin/partials/galeriesBottomSheet.html',
+      controller: 'BottomSheetCtrl',
+      targetEvent: $event
+    }).then(function(clickedItem) {
+      if (clickedItem == 'edit') {
+        $scope.editGalerie (galerie);
+      }
+      if (clickedItem == 'delete') {
+        $scope.showGalerieDeleteConfirm (galerie);
+      }
+      if (clickedItem == 'editItems') {
+        $scope.editItems (galerie);
       }
     });
   };
@@ -46,51 +49,28 @@ controller('GaleriesCtrl', ['$scope', '$location', '$http', 'msg', function($sco
       } else {
         msg.error(response.status);
       }
+    }).error(function (response) {
+      msg.error(response);
     });
   };
 
   $scope.showGalerieDeleteConfirm = function (galerie) {
-    $scope.galerie = galerie;
-    $('#deleteGalerieDialog').modal('show');
-  };
-
-  $scope.addSection = function () {
-    if (!$scope.galerie.sections) {
-      $scope.galerie.sections = [];
-    }
-
-    var section = {position: ($scope.galerie.sections.length + 1) };
-    $scope.galerie.sections.push (section);
-  };
-
-  $scope.deleteSection = function (section) {
-    //TODO
-    $scope.section = undefined;
-  };
-
-  $scope.showSectionDeleteConfirm = function (section) {
-    $scope.section = section;
-    $('#deleteSectionDialog').modal('show');
-  };
-
-  $scope.sectionUp = function (section) {
-    var previous = _.find($scope.galerie.sections, function(sec){ return sec.position == (section.position - 1); });
-    if (previous) {
-      previous.position++;
-      section.position--;
-    }
-  };
-
-  $scope.sectionDown = function (section) {
-    var next = _.find($scope.galerie.sections, function(sec){ return sec.position == (section.position + 1); });
-    if (next) {
-      next.position--;
-      section.position++;
-    }
+    var confirm = $mdDialog.confirm()
+      .title('Soll die Galerie ' + galerie.name + ' wirklich gelöscht werden?')
+      .ok('Ok')
+      .cancel('Abbrechen');
+    $mdDialog.show(confirm).then(function() {
+      $scope.deleteGalerie (galerie);
+    });
   };
 
   $scope.editItems = function (galerie) {
     $location.path('/galerieItems/' + galerie.id);
   };
 
-}]);
+}])
+.controller('BottomSheetCtrl', function($scope, $mdBottomSheet) {
+  $scope.itemClick = function(clickedItem) {
+    $mdBottomSheet.hide(clickedItem);
+  };
+});

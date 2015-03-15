@@ -3,7 +3,7 @@ use_config    = "true"
 port          = "8080"
 
 [database]
-host     = "192.168.56.103"
+host     = "localhost"
 user     = "admin"
 password = "V-uSATKiwJng"
 database = "kopfkultur"

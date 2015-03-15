@@ -19,9 +19,12 @@ angular.module('kka', [
   $routeProvider.when('/home', {templateUrl: '/static/admin/partials/home.html'});
   $routeProvider.when('/items', {templateUrl: '/static/admin/partials/items.html', controller: 'ItemsCtrl'});
   $routeProvider.when('/galeries', {templateUrl: '/static/admin/partials/galeries.html', controller: 'GaleriesCtrl'});
+  $routeProvider.when('/galerie/:galerieId?', {templateUrl: '/static/admin/partials/galerieEdit.html', controller: 'GalerieEditCtrl'});
   $routeProvider.when('/galerieItems/:galerieId?', {templateUrl: '/static/admin/partials/galerieItems.html', controller: 'GalerieItemsCtrl'});
 
   $routeProvider.otherwise({redirectTo: '/home'});
-}]).run(['$rootScope', function ($rootScope) {
-
+}]).run(['$rootScope', '$window', function ($rootScope, $window) {
+  $rootScope.back = function () {
+    $window.history.back();
+  };
     }]);

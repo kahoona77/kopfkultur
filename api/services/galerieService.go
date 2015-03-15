@@ -1,8 +1,8 @@
 package services
 
 import (
-	"rhcloud.com/kahoona77/kopfkultur/api"
-	"rhcloud.com/kahoona77/kopfkultur/api/model"
+	"github.com/kahoona77/kopfkultur/api"
+	"github.com/kahoona77/kopfkultur/api/model"
 )
 
 func FindAllGaleries(ctx *api.Context) ([]model.Galerie, error) {

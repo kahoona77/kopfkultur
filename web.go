@@ -13,8 +13,8 @@ import (
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
 
-	"rhcloud.com/kahoona77/kopfkultur/api"
-	"rhcloud.com/kahoona77/kopfkultur/api/controllers"
+	"github.com/kahoona77/kopfkultur/api"
+	"github.com/kahoona77/kopfkultur/api/controllers"
 )
 
 func main() {

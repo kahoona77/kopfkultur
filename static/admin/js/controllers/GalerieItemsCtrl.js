@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('GalerieItemsCtrl', ['$scope', '$location', '$http', '$routeParams', 'msg', function($scope, $location, $http, $routeParams, msg) {
+controller('GalerieItemsCtrl', ['$scope', '$location', '$http', '$routeParams', 'msg', '$mdDialog', function($scope, $location, $http, $routeParams, msg, $mdDialog) {
 
     $scope.loadGalerie = function (galerieId) {
       $http.get('/api/galeries/get/' + galerieId).success(function(response){
@@ -45,15 +45,32 @@ controller('GalerieItemsCtrl', ['$scope', '$location', '$http', '$routeParams', 
     };
 
     $scope.showItemDeleteConfirm = function (item) {
-      $scope.item = item;
-      $('#deleteItemDialog').modal('show');
+      var confirm = $mdDialog.confirm()
+        .content('Soll der Artikel ' + item.name + ' wirklich entfernt werden?')
+        .ok('Ok')
+        .cancel('Abbrechen');
+      $mdDialog.show(confirm).then(function() {
+        $scope.deleteItem (item);
+      });
     };
 
-    $scope.showAddItemDialog = function (section) {
+    $scope.showAddItemDialog = function (section, ev) {
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: '/static/admin/partials/addArticleDialog.html',
+        targetEvent: ev,
+      })
+      .then(function(answer) {
+        $scope.alert = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.alert = 'You cancelled the dialog.';
+      });
+
+
+
       $scope.section = section;
 
-      //mock searchresults
-      $scope.searchResults = [{name: '#BLUE STAR'}, {name: '#RED STAR'}, {name: '#PURPLE STAR'}, {name: '#PINK STAR'}]
+
 
 
       $('#addItemDialog').modal('show');
@@ -69,3 +86,15 @@ controller('GalerieItemsCtrl', ['$scope', '$location', '$http', '$routeParams', 
     };
 
 }]);
+
+function DialogController($scope, $mdDialog) {
+  //mock searchresults
+  $scope.searchResults = [{name: '#BLUE STAR'}, {name: '#RED STAR'}, {name: '#PURPLE STAR'}, {name: '#PINK STAR'}]
+
+  $scope.cancel = function() {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function(answer) {
+    $mdDialog.hide(answer);
+  };
+}

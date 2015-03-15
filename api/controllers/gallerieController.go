@@ -5,9 +5,9 @@ import (
 
 	"github.com/zenazn/goji/web"
 
-	"rhcloud.com/kahoona77/kopfkultur/api/model"
-	"rhcloud.com/kahoona77/kopfkultur/api/response"
-	"rhcloud.com/kahoona77/kopfkultur/api/services"
+	"github.com/kahoona77/kopfkultur/api/model"
+	"github.com/kahoona77/kopfkultur/api/response"
+	"github.com/kahoona77/kopfkultur/api/services"
 )
 
 // GaleriesController - ...

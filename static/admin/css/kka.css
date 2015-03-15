@@ -30,6 +30,21 @@ a {
   padding-top: 14px;
 }
 
+.header-row {
+  border-bottom: 1px solid rgb(230,230,230);
+  color: rgb(130,130,130);
+  padding: 16px 16px 16px 0;
+  margin-bottom: 16px;
+}
+
+.list-icon {
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  width: 48px;
+  height: 48px;
+  margin: 16px;
+}
+
 .md-table {
   min-width: 100%;
   border-collapse: collapse;

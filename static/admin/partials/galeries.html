@@ -3,7 +3,7 @@
     <span>Galarien Bearbeiten</span>
     <!-- fill up the space between left and right area -->
     <span flex></span>
-    <md-button href="galeries" ng-click="addGalerie()">Neue Galerie</md-button>
+    <md-button ng-click="addGalerie()">Neue Galerie</md-button>
   </div>
 </md-toolbar>
 
@@ -24,82 +24,10 @@
             <td class="md-table-content">{{galerie.name}}</td>
             <td class="md-table-content">{{galerie.description}}</td>
             <td class="md-table-td-more">
-              <md-button aria-label="Info"><i class="ion-android-more-vertical"></i></md-button>
-              <a ng-click="editGalerie(galerie)"><span class="mdi-content-create" title="Bearbeiten"></span></a>
-              <a ng-click="showGalerieDeleteConfirm(galerie)"><span class="mdi-content-clear" title="Löschen"></span></a>
-              <a ng-click="editItems(galerie)"><span class="mdi-image-collections" title="Artikel bearbeiten"></span></a>
+              <md-button aria-label="Info" ng-click="showBottomSheet(galerie)"><i class="mdi mdi-more-vert"></i></md-button>
             </td>
           <td>
         </tbody>
       </table>
     </div>
 </md-content>
-
-
-
-<!-- Galerie Edit Modal
-<div class="modal fade" id="galerieDialog" tabindex="-1" role="dialog" aria-labelledby="galerieDialogLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="galerieDialogLabel"><span class="glyphicon glyphicon-cog"></span> Galerie Bearbeiten</h4>
-      </div>
-      <div class="modal-body">
-        <form role="form" name="galerieForm" class="form-horizontal">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Name" ng-model="galerie.name" required>
-          </div>
-          <div class="form-group">
-            <label for="description">Name</label>
-            <textarea class="form-control" rows="3" id="description"ng-model="galerie.description" required></textarea>
-          </div>
-          <fieldset>
-            <legend>
-              Abschnitte
-              <button type="button" class="btn btn-primary btn-sm btn-material-deeppurple mdi-content-add-box pull-right" ng-click="addSection()"> Neuer Abschnitt</button>
-            </legend>
-            <div style="max-height: 300px; overflow-y: scroll;">
-              <table class="table table-hover">
-                <thead>
-                  <tr><th>#</th><th>Name</th><th>Beschreibung</th><th>Aktion</th></tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="section in galerie.sections | orderBy: 'position'">
-                    <td>{{$index+1}}</td>
-                    <td><input type="text" class="form-control" id="nick" placeholder="Name" ng-model="section.name" required></td>
-                    <td><input type="text" class="form-control" id="nick" placeholder="Beschreibung" ng-model="section.description" required></td>
-                    <td>
-                      <a ng-click="showSectionDeleteConfirm(section)"><span class="mdi-content-clear" title="Löschen"></span></a>
-                      <a ng-click="sectionUp(section)"><span class="mdi-navigation-expand-less" title="Hoch"></span></a>
-                      <a ng-click="sectionDown(section)"><span class="mdi-navigation-expand-more" title="Runter"></span></a>
-                    </td>
-                    <td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-        <button type="button" class="btn btn-primary btn-material-deeppurple" ng-disabled="galerieForm.$invalid" ng-click="saveGalerie(galerie)">OK</button>
-      </div>
-    </div>
-  </div>
-</div>
--->
-
-<!-- Galerie Delete Confirm Modal
-<confirm-dialog confirm="deleteGalerie(galerie)" id="deleteGalerieDialog">
-  Soll die Galerie '{{galerie.name}}' wirklich gelöscht werden?
-</confirm-dialog>
--->
-
-<!-- Section Delete Confirm Modal
-<confirm-dialog confirm="deleteSection(section)" id="deleteSectionDialog">
-  Soll der Abschnitt '{{section.name}}' wirklich gelöscht werden?
-</confirm-dialog>
--->

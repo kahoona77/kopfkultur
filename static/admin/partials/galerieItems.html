@@ -1,98 +1,52 @@
-<div class="action-bar-container">
-  <div class="action-bar">
-    <div class="col-sm-6 action-bar-text">
-      <span>Galarien-Artikel Bearbeiten</span>
-    </div>
-    <div class="col-sm-6">
-      <button type="button" class="btn btn-primary btn-sm btn-material-deeppurple mdi-content-save pull-right" ng-click="saveGalerie()"> Galerie speichern</button>
-    </div>
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button ng-click="back()"><i class="mdi mdi-keyboard-arrow-left mdi-lg"></i></md-button>
+    <span>{{galerie.name}} - Artikel Bearbeiten</span>
+    <!-- fill up the space between left and right area -->
+    <span flex></span>
+    <md-button ng-click="saveGalerie()"><i class="mdi mdi-done mdi-lg"></i></md-button>
   </div>
-</div>
+</md-toolbar>
 
-<div class="row" ng-repeat="section in galerie.sections">
-  <div class="col-sm-12">
-    <div class="row">
-      <div class="col-sm-6">
-        <h4>{{section.name}}</h4>
+<md-content class="md-padding" layout="column">
+  <div ng-repeat="section in galerie.sections">
+    <div layout="row">
+      <h4>{{section.name}}</h4>
+      <span flex></span>
+      <md-button class="md-fab md-primary" style="position: relative; top: -10px;" ng-click="showAddItemDialog(section)">
+        <i class="mdi mdi-add mdi-lg"></i>
+      </md-button>
+    </div>
+
+    <div layout="row" class="header-row">
+      <div flex="10">
+        #
       </div>
-      <div class="col-sm-6">
-        <button type="button" class="btn btn-primary btn-sm btn-material-deeppurple mdi-content-add-box pull-right" ng-click="showAddItemDialog(section)"> Artikel hinzufügen</button>
+      <div flex="35">
+        Name
+      </div>
+      <div flex="45">
+        Bild
+      </div>
+      <div flex="10">
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-12">
-        <table class="table table-hover">
-          <thead>
-            <tr><th>#</th><th>Name</th><th>Bild</th><th>Aktion</th></tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="item in section.items | orderBy: 'position'">
-              <td>{{item.position}}</td>
-              <td style="width: 35%">{{item.name}}</td>
-              <td><img ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" style="height: 100px;"/></td>
-              <td>
-                <a ng-click="showItemDeleteConfirm(item)"><span class="mdi-content-clear" title="Löschen"></span></a>
-                <a ng-click="itemUp(section, item)"><span class="mdi-navigation-expand-less" title="Hoch"></span></a>
-                <a ng-click="itemDown(section, item)"><span class="mdi-navigation-expand-more" title="Runter"></span></a>
-              </td>
-              <td>
-            </tr>
-          </tbody>
-        </table>
+    <div layout="row" ng-repeat="item in section.items | orderBy: 'position'">
+      <div flex="10">
+        {{item.position}}
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- Add Item Dialog -->
-<div class="modal fade" id="addItemDialog" tabindex="-1" role="dialog" aria-labelledby="addItemDialogLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="addItemDialogLabel"><span class="mdi-content-add-box"></span> Artikel hinzufügen</h4>
+      <div flex="35">
+        {{item.name}}
       </div>
-      <div class="modal-body">
-        <div class="row well">
-          <div class="col-sm-12">
-            <form role="form" name="addItemForm">
-              <div class="input-group col-sm-12">
-                <input type="text" class="form-control" placeholder="Artikelname" ng-model="itemQuery">
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <table class="table table-hover" style="display: block; max-height: 450px; overflow-y: scroll;">
-              <tbody>
-                <tr ng-repeat="result in searchResults">
-                  <td style="vertical-align: middle; width: 60%;">
-                    {{result.name}}
-                  </td>
-                  <td style="vertical-align: middle; width: 30%;">
-                    <img ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" style="height: 100px;"/>
-                  </td>
-                  <td style="vertical-align: middle;">
-                    <a ng-click="addItem(result)" class="btn btn-default btn-fab btn-raised mdi-content-add"></span></a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-
+      <div flex="45">
+        <img ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" style="height: 100px;"/>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
+      <div flex="10" style="margin-top: 1rem;">
+        <a ng-click="showItemDeleteConfirm(item)"><i class="mdi mdi-delete" title="Löschen"></i></a>
+        <a ng-click="itemUp(section, item)"><i class="mdi mdi-keyboard-arrow-up" title="Hoch"></i></a>
+        <a ng-click="itemDown(section, item)"><i class="mdi mdi-keyboard-arrow-down" title="Runter"></i></a>
       </div>
     </div>
   </div>
-</div>
-
-<!-- Item Delete Confirm Modal -->
-<confirm-dialog confirm="deleteItem(item)" id="deleteItemDialog">
-  Soll der Artikel '{{item.name}}' wirklich entfernt werden?
-</confirm-dialog>
+</md-content>

@@ -7,7 +7,7 @@ import (
 	"github.com/pelletier/go-toml"
 	"github.com/zenazn/goji/web"
 
-	"rhcloud.com/kahoona77/kopfkultur/api/model"
+	"github.com/kahoona77/kopfkultur/api/model"
 )
 
 //Context - the application context
