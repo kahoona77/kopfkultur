@@ -1,9 +1,0 @@
-[general]
-use_config    = "true"
-port          = "8080"
-
-[database]
-host     = "localhost"
-user     = "admin"
-password = "V-uSATKiwJng"
-database = "kopfkultur"
