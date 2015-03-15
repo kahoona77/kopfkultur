@@ -1,0 +1,77 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button ng-click="back()"><i class="mdi mdi-keyboard-arrow-left mdi-lg"></i></md-button>
+    <span>{{galerie.name}}</span>
+    <!-- fill up the space between left and right area -->
+    <span flex></span>
+    <md-button ng-click="saveGalerie()"><i class="mdi mdi-done mdi-lg"></i></md-button>
+  </div>
+</md-toolbar>
+
+<md-content class="md-padding" layout="column">
+  <form name="galerieForm">
+    <div layout="column">
+      <md-input-container flex>
+        <label>Name</label>
+        <input placeholder="Name" ng-model="galerie.name" required>
+      </md-input-container>
+      <md-input-container flex>
+        <label>Beschreibung</label>
+        <textarea placeholder="Beschreibung" ng-model="galerie.description"></textarea>
+      </md-input-container>
+    </div>
+    <md-content class="md-padding md-whiteframe-z1" layout="column">
+      <div layout="row">
+        <h4>Abschnitte</h4>
+        <span flex></span>
+        <md-button class="md-fab md-primary" style="position: relative; top: -10px;" ng-click="addSection()">
+          <i class="mdi mdi-add mdi-lg"></i>
+        </md-button>
+      </div>
+
+      <div layout="row">
+        <div flex="10">
+          #
+        </div>
+        <div flex="30">
+          Name
+        </div>
+        <div flex="50">
+          Beschreibung
+        </div>
+        <div flex="10">
+          Aktion
+        </div>
+      </div>
+
+      <div layout="row" ng-repeat="section in galerie.sections | orderBy: 'position'">
+        <div flex="10">
+          <md-input-container flex>
+            <input value="{{$index+1}}" disabled>
+          </md-input-container>
+        </div>
+        <div flex="30">
+          <md-input-container flex>
+            <input ng-model="section.name" required>
+          </md-input-container>
+        </div>
+        <div flex="50">
+          <md-input-container flex>
+            <input ng-model="section.description">
+          </md-input-container>
+        </div>
+        <div flex="10" style="margin-top: 1rem;">
+          <a ng-click="showSectionDeleteConfirm(section)"><i class="mdi mdi-delete" title="Löschen"></i></a>
+          <a ng-click="sectionUp(section)"><i class="mdi mdi-keyboard-arrow-up" title="Hoch"></i></a>
+          <a ng-click="sectionDown(section)"><i class="mdi mdi-keyboard-arrow-down" title="Runter"></i></a>
+        </div>
+      </div>
+    </md-content>
+  </form>
+</md-content>
+
+<!-- Section Delete Confirm Modal
+<confirm-dialog confirm="deleteSection(section)" id="deleteSectionDialog">
+  Soll der Abschnitt '{{section.name}}' wirklich gelöscht werden?
+</confirm-dialog>
+-->

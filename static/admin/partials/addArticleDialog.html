@@ -1,0 +1,36 @@
+<md-dialog aria-label="Artikel hinzufügen">
+  <md-content>
+    <md-subheader class="md-sticky-no-effect">Artikel hinzufügen</md-subheader>
+    <div layout="row">
+      <md-input-container flex>
+        <label>Artikelname</label>
+        <input placeholder="Artikelname" ng-model="itemQuery">
+      </md-input-container>
+      <md-button ng-click="searchArticle()">
+       Suchen
+      </md-button>
+    </div>
+    <md-list>
+      <md-item ng-repeat="result in searchResults">
+        <md-item-content>
+          <div class="md-tile-left">
+            <img class="list-icon" ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" />
+          </div>
+          <div class="md-tile-content">
+            <h3>{{result.name}}</h3>
+            <p>
+              {{result.description}}
+            </p>
+          </div>
+          <a ng-click="addItem(result)" class="btn btn-default btn-fab btn-raised mdi-content-add"></span></a>
+        </md-item-content>
+      </md-item>
+    </md-list>
+  </md-content>
+  <div class="md-actions" layout="row">
+    <span flex></span>
+    <md-button ng-click="cancel()">
+     Abbrechen
+    </md-button>
+  </div>
+</md-dialog>
