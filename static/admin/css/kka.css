@@ -38,11 +38,11 @@ a {
 }
 
 .list-icon {
-  border-radius: 30px;
+  border-radius: 48px;
   border: 1px solid #ddd;
-  width: 48px;
-  height: 48px;
-  margin: 16px;
+  width: 96px;
+  height: 96px;
+  margin: 0px;
 }
 
 .md-table {

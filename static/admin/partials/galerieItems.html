@@ -4,12 +4,12 @@
     <span>{{galerie.name}} - Artikel Bearbeiten</span>
     <!-- fill up the space between left and right area -->
     <span flex></span>
-    <md-button ng-click="saveGalerie()"><i class="mdi mdi-done mdi-lg"></i></md-button>
+    <md-button ng-click="saveGalerieItems(galerie)"><i class="mdi mdi-done mdi-lg"></i></md-button>
   </div>
 </md-toolbar>
 
 <md-content class="md-padding" layout="column">
-  <div ng-repeat="section in galerie.sections">
+  <div ng-repeat="section in galerie.sections | orderBy: 'position'">
     <div layout="row">
       <h4>{{section.name}}</h4>
       <span flex></span>
@@ -37,13 +37,13 @@
         {{item.position}}
       </div>
       <div flex="35">
-        {{item.name}}
+        {{item.item.name}}
       </div>
       <div flex="45">
-        <img ng-src="http://kopf-kultur.de/img/kopfkultur/galeries/hats/hats_summer_05.jpg" style="height: 100px;"/>
+        <img class="list-icon" ng-src="{{item.item.thumb}}" />
       </div>
       <div flex="10" style="margin-top: 1rem;">
-        <a ng-click="showItemDeleteConfirm(item)"><i class="mdi mdi-delete" title="Löschen"></i></a>
+        <a ng-click="showItemDeleteConfirm(section, item)"><i class="mdi mdi-delete" title="Löschen"></i></a>
         <a ng-click="itemUp(section, item)"><i class="mdi mdi-keyboard-arrow-up" title="Hoch"></i></a>
         <a ng-click="itemDown(section, item)"><i class="mdi mdi-keyboard-arrow-down" title="Runter"></i></a>
       </div>

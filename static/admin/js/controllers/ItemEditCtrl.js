@@ -3,22 +3,31 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('ItemEditCtrl', ['$scope', '$location', 'itemService', '$routeParams', '$upload', function($scope, $location, itemService, $routeParams, $upload) {
+controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService', '$routeParams', '$upload', function($scope, $location, itemService, imageService, $routeParams, $upload) {
 
-  $scope.item = {};
+  $scope.item  = {};
+  $scope.image = {};
 
   var loadImage = function() {
     var fileDrop = document.getElementById("fileDrop");
+
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
+
+    var thumbCanvas = document.getElementById('thumbCanvas');
+    var thumbCtx = thumbCanvas.getContext('2d');
 
     /// set size proportional to image
     canvas.height = canvas.width * (this.height / this.width);
     fileDrop.style.height = (canvas.height + 25)+'px';
-
     context.drawImage(this, 0, 0, canvas.width, canvas.height);
+    $scope.image = canvas.toDataURL();
 
-    $scope.item.image = canvas.toDataURL();
+    //create thump
+    thumbCanvas.width=140;
+    thumbCanvas.height=140;
+    thumbCtx.drawImage(this, 0, 0, thumbCanvas.width, thumbCanvas.height);
+    $scope.item.thumb = thumbCanvas.toDataURL();
   };
 
   $scope.loadItem = function (itemId) {
@@ -28,9 +37,13 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', '$routeParams'
           $scope.item = response.data;
 
           //load image
-          var image = new Image();
-          image.src = $scope.item.image;
-          image.onload = loadImage;
+          imageService.loadImage($scope.item.imageId).then (function (response){
+            $scope.image = response.data;
+            var img = new Image();
+            img.src = $scope.image;
+            img.onload = loadImage;
+          });
+
 
         } else {
           msg.error (response.status);
@@ -41,11 +54,21 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', '$routeParams'
   $scope.loadItem ($routeParams.itemId);
 
   $scope.saveItem = function (item) {
-    itemService.saveItem(item).then(function (response) {
-      if (response.status = 'ok') {
-        $location.path('/items');
+    //first save image
+    imageService.saveImage(item.imageId, $scope.image).then(function(res){
+      if (res.status == 'ok') {
+        item.imageId = res.imageId;
+
+        //then save item
+        itemService.saveItem(item).then(function (response) {
+          if (response.status == 'ok') {
+            $location.path('/items');
+          } else {
+            msg.error(response.status);
+          }
+        });
       } else {
-        msg.error(response.status);
+        msg.error(res.status);
       }
     });
   };

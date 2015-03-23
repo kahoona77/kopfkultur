@@ -28,12 +28,13 @@ func main() {
 
 func notFound(w http.ResponseWriter, r *http.Request) {
 	p := r.URL.Path
+	fmt.Printf("url: %v", p)
 	if p == "/" || strings.HasPrefix(p, "/home") {
 		body, _ := ioutil.ReadFile("./static/public/index.html")
 		fmt.Fprintf(w, string(body))
 		return
 	}
-	if strings.HasPrefix(p, "/admin") {
+	if strings.HasPrefix(p, "/static/admin") {
 		body, _ := ioutil.ReadFile("./static/admin/index.html")
 		fmt.Fprintf(w, string(body))
 		return
