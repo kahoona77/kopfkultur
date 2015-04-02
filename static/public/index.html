@@ -7,19 +7,15 @@
     <link rel="icon" type="image/png" href="static/public/img/kopfkultur/kk_favicon.png" />
 
     <!-- Bootstrap -->
-    <link href="static/public/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="stylesheet" href="static/public/css/blueimp-gallery.min.css">
-    <link rel="stylesheet" href="static/public/css/bootstrap-image-gallery.min.css">
+    <link href="static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="static/public/css/blueimp-gallery.min.css" rel="stylesheet" >
+    <link href="static/public/css/bootstrap-image-gallery.min.css" rel="stylesheet" >
     <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link href="static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="static/public/css/kopfkultur.css" rel="stylesheet" media="screen">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0-rc.3/angular-route.js"></script>
-    <script src="static/public/js/kopfkultur.js"></script>
 </head>
 
-<body ng-app='kopfkultur'>
+<body ng-app='kopfkultur' ng-controller="KopfKulturController">
 
 <!-- +++++++++++++++ NAVBAR +++++++++++++++++ -->
 <!-- Static navbar -->
@@ -34,7 +30,7 @@
             </button>
             <a class="kk-brand navbar-brand " href="#">
                 <img src="static/public/img/kopfkultur/kopfkultur_logo_bw_64.png" alt="">
-                Kopf-Kultur
+                <span>Kopf-Kultur</span>
             </a>
         </div>
         <div class="navbar-collapse collapse navbar-ex1-collapse">
@@ -50,6 +46,16 @@
                         <li><a href="#/galeries/headpieces">Kopfschmuck</a></li>
                         <li><a href="#/galeries/bridal">Braut</a></li>
                         <!--<li><a href="#/galeries/kids">Kinder</a></li>-->
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle kk-anchor kk-icon-link" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-th-large"></span>
+                        Galerien2
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li ng-repeat="galerie in galeries"><a href="#/galerie/{{galerie.$id}}">{{galerie.name}}</a></li>
                     </ul>
                 </li>
                 <li><a href="#about" class="kk-icon-link"><span class="glyphicon glyphicon-user"></span> Über mich</a></li>
@@ -83,7 +89,7 @@
 </div>
 
 <!-- ------  ^ HEADER ^   ----------- -->
-<div ng-controller="KopfKulturController">
+<div>
     <div ng-view></div>
 </div>
 
@@ -135,9 +141,19 @@
 <!-- Le javascript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="static/public/js/bootstrap.min.js"></script>
-<script src="static/public/js/jquery.blueimp-gallery.min.js"></script>
-<script src="static/public/js/bootstrap-image-gallery.min.js"></script>
+<script src="/static/lib/jquery/dist/jquery.min.js"></script>
+<script src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/static/public/js/jquery.blueimp-gallery.min.js"></script>
+<script src="/static/public/js/bootstrap-image-gallery.min.js"></script>
+<script src="/static/lib/angular/angular.js"></script>
+<script src="/static/lib/angular-route/angular-route.js"></script>
+<!-- Firebase -->
+<script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+
+<script src="/static/public/js/kopfkultur.js"></script>
+<script src="/static/public/js/GalerieController.js"></script>
+<script src="/static/admin/js/services/galerieService.js"></script>
 </body>
 </html>

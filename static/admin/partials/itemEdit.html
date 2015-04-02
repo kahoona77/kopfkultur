@@ -1,46 +1,49 @@
-<md-toolbar>
-  <div class="md-toolbar-tools">
-    <md-button ng-click="back()"><i class="mdi mdi-keyboard-arrow-left mdi-lg"></i></md-button>
-    <span>{{item.name}}</span>
-    <!-- fill up the space between left and right area -->
-    <span flex></span>
-    <md-button ng-click="saveItem(item)"><i class="mdi mdi-done mdi-lg"></i></md-button>
-  </div>
-</md-toolbar>
-
-<md-content class="md-padding" layout="column">
-  <form name="itemForm">
-    <div layout="column">
-      <md-input-container flex>
-        <label>Name</label>
-        <input placeholder="Name" ng-model="item.name" required>
-      </md-input-container>
-      <md-input-container flex>
-        <label>Preis</label>
-        <input type="number" step="any" min="0" placeholder="Preis" ng-model="item.price" required>
-      </md-input-container>
-      <md-input-container flex>
-        <label>Beschreibung</label>
-        <textarea placeholder="Beschreibung" ng-model="item.description"></textarea>
-      </md-input-container>
+<div layout="column" flex>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button ng-click="back()"><i class="mdi mdi-keyboard-arrow-left mdi-lg"></i></md-button>
+      <span>{{item.name}}</span>
+      <!-- fill up the space between left and right area -->
+      <span flex></span>
+      <md-button ng-click="saveItem(item)"><i class="mdi mdi-done mdi-lg"></i></md-button>
     </div>
-    <md-content class="md-padding md-whiteframe-z1" layout="column">
-      <div layout="row">
-        <h4>Bild</h4>
+  </md-toolbar>
+
+  <md-content class="kka-content md-padding" layout="column">
+    <form name="itemForm">
+      <div layout="column">
+        <md-input-container flex>
+          <label>Name</label>
+          <input placeholder="Name" ng-model="item.name" required>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Preis</label>
+          <input type="number" step="any" min="0" placeholder="Preis" ng-model="item.price" required>
+        </md-input-container>
+        <md-input-container flex>
+          <label>Beschreibung</label>
+          <textarea placeholder="Beschreibung" ng-model="item.description"></textarea>
+        </md-input-container>
       </div>
-      <div id="fileDrop" ng-file-drop ng-file-select ng-model="files" ng-model-rejected="rejFiles"
-      drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-      class="drop-box" ng-multiple="false" allow-dir="true" ng-accept="'image/*'">
-          <p>Bilder hier ablegen</p>
-          <p>oder</p>
-          <p>Klicken zum Auswählen</p>
-          <canvas id="canvas" width="600">
-             Browser missing HTML5 support.
-          </canvas>
+      <md-content class="md-padding md-whiteframe-z1" layout="column">
+        <div layout="row">
+          <h4>Bild</h4>
         </div>
-    </md-content>
-  </form>
-</md-content>
-<div style="visibility: hidden">
-  <canvas id="thumbCanvas" width="140"></canvas>
-<div>
+        <div id="fileDrop" ng-file-drop ng-file-select ng-model="files" ng-model-rejected="rejFiles"
+        drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
+        class="drop-box" ng-multiple="false" allow-dir="true" ng-accept="'image/*'">
+            <img class="drop-box-img" ng-src="{{image}}" />
+            <div class="drop-box-overlay">
+              <p>Bilder hier ablegen</p>
+              <p>oder</p>
+              <p>Klicken zum Auswählen</p>
+            </div>
+          </div>
+      </md-content>
+    </form>
+  </md-content>
+  <div style="visibility: hidden">
+    <canvas id="thumbCanvas" width="140"></canvas>
+    <canvas id="canvas" width="600"></canvas>
+  </div>
+</div>

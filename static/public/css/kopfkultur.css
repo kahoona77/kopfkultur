@@ -49,6 +49,10 @@ a:hover, a:focus {
   padding-top: 10px;
 }
 
+.kk-brand img {
+  display: inline;
+}
+
 .kk-brand:hover{
   color: #a181a6;
 }
@@ -263,6 +267,3 @@ footer {
   padding-right: 50px;
   padding-left: 50px;
 }
-
-
-

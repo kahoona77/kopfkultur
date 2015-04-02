@@ -9,8 +9,6 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService'
   $scope.image = {};
 
   var loadImage = function() {
-    var fileDrop = document.getElementById("fileDrop");
-
     var canvas = document.getElementById("canvas");
     var context = canvas.getContext("2d");
 
@@ -19,15 +17,18 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService'
 
     /// set size proportional to image
     canvas.height = canvas.width * (this.height / this.width);
-    fileDrop.style.height = (canvas.height + 25)+'px';
     context.drawImage(this, 0, 0, canvas.width, canvas.height);
-    $scope.image = canvas.toDataURL();
 
     //create thump
     thumbCanvas.width=140;
     thumbCanvas.height=140;
     thumbCtx.drawImage(this, 0, 0, thumbCanvas.width, thumbCanvas.height);
-    $scope.item.thumb = thumbCanvas.toDataURL();
+
+    $scope.$apply(function(scope) {
+      scope.image = canvas.toDataURL();
+      scope.item.thumb = thumbCanvas.toDataURL();
+    });
+
   };
 
   $scope.loadItem = function (itemId) {
@@ -39,11 +40,7 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService'
           //load image
           imageService.loadImage($scope.item.imageId).then (function (response){
             $scope.image = response.data;
-            var img = new Image();
-            img.src = $scope.image;
-            img.onload = loadImage;
           });
-
 
         } else {
           msg.error (response.status);

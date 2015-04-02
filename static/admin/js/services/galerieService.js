@@ -5,16 +5,30 @@ app.factory('galerieService', [ '$q', '$firebaseArray',  function($q, $firebaseA
   var ref = new Firebase("https://kopfkultur.firebaseio.com/galeries");
   var galeries = $firebaseArray(ref);
 
+  var l = $q.defer();
+  var r = l.promise;
+
+  galeries.$loaded(function() {
+    l.resolve();
+  });
+
   return {
+
+
       loadGaleries: function () {
         var p = $q.defer();
-        p.resolve({status: 'ok', data: galeries});
+        r.then(function(){
+          p.resolve({status: 'ok', data: galeries});
+        })
         return p.promise;
       },
 
       loadGalerie: function (id) {
         var p = $q.defer();
-        p.resolve({status: 'ok', data: galeries.$getRecord(id)});
+        r.then(function(){
+          p.resolve({status: 'ok', data: galeries.$getRecord(id)});
+        })
+
         return p.promise;
       },
 

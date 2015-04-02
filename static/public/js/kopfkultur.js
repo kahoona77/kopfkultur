@@ -1,10 +1,13 @@
-var kkModule = angular.module('kopfkultur', ['ngRoute'])
+angular.module('kka.services', []);
+
+var kkModule = angular.module('kopfkultur', ['ngRoute', 'firebase', 'kka.services'])
   .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.
       when('/home', {templateUrl: 'static/public/partials/home.html'}).
       when('/about', {templateUrl: 'static/public/partials/about.html'}).
       when('/contact', {templateUrl: 'static/public/partials/contact.html'}).
       when('/shop', {templateUrl: 'static/public/partials/shop.html'}).
+      when('/galerie/:galerieId?', {templateUrl: 'static/public/partials/galerie.html'}).
       when('/galeries/hats', {templateUrl: 'static/public/partials/galeries/hats.html'}).
       when('/galeries/headpieces', {templateUrl: 'static/public/partials/galeries/headpieces.html'}).
       when('/galeries/bridal', {templateUrl: 'static/public/partials/galeries/bridal.html'}).
@@ -13,11 +16,20 @@ var kkModule = angular.module('kopfkultur', ['ngRoute'])
   }]);
 
 kkModule.controller('KopfKulturController',
-  function ($scope, $anchorScroll, $location) {
+  function ($scope, $anchorScroll, $location, galerieService) {
 
     $('.kk-icon-link').tooltip({
       placement: 'bottom'
     });
+
+    $scope.loadGaleries = function () {
+      galerieService.loadGaleries().then(function(response){
+        if (response.status == 'ok') {
+          $scope.galeries = response.data;
+        }
+      });
+    };
+    $scope.loadGaleries();
 
     $scope.isScreenXS = true;
 

@@ -34,7 +34,7 @@ func notFound(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, string(body))
 		return
 	}
-	if strings.HasPrefix(p, "/static/admin") {
+	if strings.HasPrefix(p, "/admin") {
 		body, _ := ioutil.ReadFile("./static/admin/index.html")
 		fmt.Fprintf(w, string(body))
 		return

@@ -45,6 +45,11 @@ a {
   margin: 0px;
 }
 
+.kka-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .md-table {
   min-width: 100%;
   border-collapse: collapse;
@@ -84,26 +89,23 @@ a {
 
 
 .drop-box {
+  height: 480px;
+  padding-top: 10px;
   background: #F8F8F8;
   border: 5px dashed #DDD;
-  width: 630px;
-  height: 300px;
   text-align: center;
-  padding-top: 60px;
-  margin-left: 10px;
-}
-
-.drop-box canvas {
-  position: absolute;
-  top: 95px;
-  left: 40px;
   opacity: 0.7;
 }
 
-.drop-box p {
+.drop-box-img {
+  height: 450px;
+}
+
+.drop-box-overlay {
+  position: relative;
+  top: -350px;
   font-weight: bold;
   font-size: 14pt;
-  color: rgb(124, 124, 124);
 }
 
 .drop-box.dragover {
