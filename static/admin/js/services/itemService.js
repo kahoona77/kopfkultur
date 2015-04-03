@@ -5,16 +5,27 @@ app.factory('itemService', [ '$q', '$firebaseArray',  function($q, $firebaseArra
   var ref = new Firebase("https://kopfkultur.firebaseio.com/items");
   var items = $firebaseArray(ref);
 
+  var l = $q.defer();
+  var r = l.promise;
+
+  items.$loaded(function() {
+    l.resolve();
+  });
+
   return {
       loadItems: function () {
         var p = $q.defer();
-        p.resolve({status: 'ok', data: items});
+        r.then(function(){
+          p.resolve({status: 'ok', data: items});
+        });
         return p.promise;
       },
 
       loadItem: function (id) {
         var p = $q.defer();
-        p.resolve({status: 'ok', data: items.$getRecord(id)});
+        r.then(function(){
+          p.resolve({status: 'ok', data: items.$getRecord(id)});
+        });
         return p.promise;
       },
 

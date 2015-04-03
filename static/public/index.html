@@ -8,8 +8,8 @@
 
     <!-- Bootstrap -->
     <link href="static/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="static/public/css/blueimp-gallery.min.css" rel="stylesheet" >
-    <link href="static/public/css/bootstrap-image-gallery.min.css" rel="stylesheet" >
+    <link href="static/lib/blueimp-gallery/css/blueimp-gallery.min.css" rel="stylesheet" >
+    <link href="static/lib/blueimp-bootstrap-image-gallery/css/bootstrap-image-gallery.min.css" rel="stylesheet" >
     <link href='http://fonts.googleapis.com/css?family=Great+Vibes' rel='stylesheet' type='text/css'>
     <link href="static/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <link href="static/public/css/kopfkultur.css" rel="stylesheet" media="screen">
@@ -102,7 +102,7 @@
 
 
 <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
-<div id="blueimp-gallery" class="blueimp-gallery kk-modal-gallery">
+<div id="blueimp-gallery" class="blueimp-gallery kk-modal-gallery" data-slide-error-class="kka-slide-err">
     <!-- The container for the modal slides -->
     <div class="slides"></div>
     <!-- Controls for the borderless lightbox -->
@@ -143,8 +143,11 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="/static/lib/jquery/dist/jquery.min.js"></script>
 <script src="/static/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/static/public/js/jquery.blueimp-gallery.min.js"></script>
-<script src="/static/public/js/bootstrap-image-gallery.min.js"></script>
+
+<script src="/static/lib/blueimp-gallery/js/blueimp-gallery.js"></script>
+<script src="/static/lib/blueimp-gallery/js/jquery.blueimp-gallery.js"></script>
+<script src="/static/lib/blueimp-bootstrap-image-gallery/js/bootstrap-image-gallery.js"></script>
+
 <script src="/static/lib/angular/angular.js"></script>
 <script src="/static/lib/angular-route/angular-route.js"></script>
 <!-- Firebase -->
@@ -155,5 +158,7 @@
 <script src="/static/public/js/kopfkultur.js"></script>
 <script src="/static/public/js/GalerieController.js"></script>
 <script src="/static/admin/js/services/galerieService.js"></script>
+<script src="/static/admin/js/services/itemService.js"></script>
+<script src="/static/admin/js/services/imageService.js"></script>
 </body>
 </html>
