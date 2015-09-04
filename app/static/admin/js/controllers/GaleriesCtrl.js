@@ -21,7 +21,7 @@ controller('GaleriesCtrl', ['$scope', '$location', 'galerieService', 'msg', '$md
   };
 
   $scope.editGalerie = function (galerie) {
-    $location.path('/galerie/' + galerie.$id);
+    $location.path('/galerie/' + galerie.id);
   };
 
   $scope.editItems = function (galerie) {
