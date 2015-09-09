@@ -17,7 +17,7 @@ func defaultKey(c appengine.Context, kind string) *datastore.Key {
 // List loads all galleries
 func list(c *gin.Context, kind string, result interface{}) error {
 	gaeC := appengine.NewContext(c.Request)
-	q := datastore.NewQuery(itemKind).Ancestor(defaultKey(gaeC, kind)).Limit(10)
+	q := datastore.NewQuery(kind).Ancestor(defaultKey(gaeC, kind)).Limit(10)
 
 	if _, err := q.GetAll(gaeC, result); err != nil {
 		return err
@@ -49,7 +49,7 @@ func save(c *gin.Context, kind string, model models.GaeModel) error {
 		model.SetID(low)
 	}
 
-	key := datastore.NewKey(gaeC, itemKind, "", model.GetID(), defaultKey(gaeC, kind))
+	key := datastore.NewKey(gaeC, kind, "", model.GetID(), defaultKey(gaeC, kind))
 	key, err := datastore.Put(gaeC, key, model)
 	if err != nil {
 		return err

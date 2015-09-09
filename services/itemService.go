@@ -5,7 +5,7 @@ import (
 	"github.com/kahoona77/kopfkultur/models"
 )
 
-const itemKind = "Gallery"
+const itemKind = "Item"
 
 // ItemService -
 type ItemService struct{}

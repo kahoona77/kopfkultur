@@ -1,7 +1,7 @@
 package kopfkultur
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"reflect"
@@ -14,6 +14,7 @@ import (
 )
 
 func init() {
+	log.Print("Starting kopf-kultur")
 	app := createApp()
 	router := gin.New()
 
@@ -34,12 +35,12 @@ func createApp() KopfKulturApp {
 		&inject.Object{Value: &app},
 	)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		log.Fatal(err)
 		os.Exit(1)
 	}
 
 	if err := g.Populate(); err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		log.Fatal(err)
 		os.Exit(1)
 	}
 	return app
@@ -53,8 +54,8 @@ type KopfKulturApp struct {
 
 //AddControllers add all controllers of emerald to gin
 func (app *KopfKulturApp) AddControllers(router *gin.Engine) {
-	app.addController(router.Group("api/gallery"), app.GalleryController)
 	app.addController(router.Group("api/item"), app.ItemController)
+	app.addController(router.Group("api/gallery"), app.GalleryController)
 }
 
 func (app *KopfKulturApp) addController(route *gin.RouterGroup, controller interface{}) {
