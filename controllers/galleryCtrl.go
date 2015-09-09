@@ -46,3 +46,15 @@ func (gc *GalleryController) Save(c *gin.Context) {
 
 	renderOk(c, gallery)
 }
+
+// Delete deletes a gallery
+func (gc *GalleryController) Delete(c *gin.Context) {
+	err := gc.GalleryService.Delete(c, c.Query("id"))
+
+	if err != nil {
+		renderError(c, err)
+		return
+	}
+
+	OK(c)
+}

@@ -1,56 +1,39 @@
 var app = angular.module("kka.services");
 
-app.factory('itemService', [ '$q', '$firebaseArray',  function($q, $firebaseArray) {
+app.factory('itemService', [ '$http',  function($http) {
 
-  var ref = new Firebase("https://kopfkultur.firebaseio.com/items");
-  var items = $firebaseArray(ref);
+  function returnData(response) {
+    var result = response.data;
+    return {status: 'ok', data: result.data};
+  }
 
-  var l = $q.defer();
-  var r = l.promise;
-
-  items.$loaded(function() {
-    l.resolve();
-  });
+  function logException(error) {
+   $log.error('XHR Failed for itemService.' + error.data);
+  }
 
   return {
       loadItems: function () {
-        var p = $q.defer();
-        r.then(function(){
-          p.resolve({status: 'ok', data: items});
-        });
-        return p.promise;
+        return $http.get('/api/item/list')
+                .then(returnData)
+                .catch(logException);
       },
 
       loadItem: function (id) {
-        var p = $q.defer();
-        r.then(function(){
-          p.resolve({status: 'ok', data: items.$getRecord(id)});
-        });
-        return p.promise;
+        return $http.get('/api/item/load/?id=' + id)
+                .then(returnData)
+                .catch(logException);
       },
 
       saveItem: function (item) {
-        var p = $q.defer();
-        if (item.$id) {
-          // save existing
-          items.$save (item).then(function(ref) {
-            p.resolve({status: 'ok', data: ref});
-          });
-        } else {
-          // add new existing
-          items.$add (item).then(function(ref) {
-            p.resolve({status: 'ok', data: ref});
-          });
-        }
-        return p.promise;
+        return $http.post('/api/item/save', item)
+                .then(returnData)
+                .catch(logException);
       },
 
       removeItem: function (item) {
-        var p = $q.defer();
-        items.$remove (item).then(function(ref) {
-          p.resolve({status: 'ok', data: ref});
-        });
-        return p.promise;
+        return $http.delete('/api/item/delete/?id=' + item.id)
+                .then(returnData)
+                .catch(logException);
       }
   }
 }]);

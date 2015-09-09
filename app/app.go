@@ -1,22 +1,60 @@
-package core
+package kopfkultur
 
 import (
+	"fmt"
+	"net/http"
+	"os"
 	"reflect"
 	"unicode"
 	"unicode/utf8"
 
+	"github.com/facebookgo/inject"
 	"github.com/gin-gonic/gin"
 	"github.com/kahoona77/kopfkultur/controllers"
 )
 
+func init() {
+	app := createApp()
+	router := gin.New()
+
+	//register all controllers
+	app.AddControllers(router)
+
+	//Start all jobs
+	app.StartJobs()
+
+	http.Handle("/", router)
+}
+
+func createApp() KopfKulturApp {
+	var app KopfKulturApp
+
+	var g inject.Graph
+	err := g.Provide(
+		&inject.Object{Value: &app},
+	)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+
+	if err := g.Populate(); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
+	}
+	return app
+}
+
 // KopfKulturApp is the bas App of Emerald
 type KopfKulturApp struct {
 	GalleryController *controllers.GalleryController `inject:""`
+	ItemController    *controllers.ItemController    `inject:""`
 }
 
 //AddControllers add all controllers of emerald to gin
 func (app *KopfKulturApp) AddControllers(router *gin.Engine) {
 	app.addController(router.Group("api/gallery"), app.GalleryController)
+	app.addController(router.Group("api/item"), app.ItemController)
 }
 
 func (app *KopfKulturApp) addController(route *gin.RouterGroup, controller interface{}) {
