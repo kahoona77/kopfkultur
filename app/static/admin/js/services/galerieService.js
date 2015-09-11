@@ -3,8 +3,7 @@ var app = angular.module("kka.services");
 app.factory('galerieService', ['$http', '$log', function($http, $log) {
 
   function returnData(response) {
-    var result = response.data;
-    return {status: 'ok', data: result.data};
+    return response.data;
   }
 
   function logException(error) {

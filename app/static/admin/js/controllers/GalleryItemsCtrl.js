@@ -3,16 +3,17 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('GalerieItemsCtrl', ['$scope', '$location', 'galerieService', 'itemService', '$routeParams', 'msg', '$mdDialog',
+controller('GalleryItemsCtrl', ['$scope', '$location', 'galerieService', 'itemService', '$routeParams', 'msg', '$mdDialog',
 function($scope, $location, galerieService, itemService, $routeParams, msg, $mdDialog) {
 
     $scope.loadGalerie = function (galerieId) {
       galerieService.loadGalerie(galerieId).then(function(response){
-        if (response.status == 'ok') {
+        if (response.success) {
           $scope.galerie = response.data;
           angular.forEach($scope.galerie.sections, function(section) {
+            var galleryItems = getItemsForSection($scope.galerie.galleryItems, section);
             var items = [];
-            angular.forEach(section.galerieItems, function(galerieItem) {
+            angular.forEach(galleryItems, function(galerieItem) {
               var item = {
                 position: galerieItem.position,
                 item:{}
@@ -20,7 +21,7 @@ function($scope, $location, galerieService, itemService, $routeParams, msg, $mdD
               items.push(item);
               //load Item
               itemService.loadItem(galerieItem.itemId).then(function(response){
-                if (response.status == 'ok') {
+                if (response.success) {
                   item.item = response.data;
                 }
               });
@@ -34,20 +35,35 @@ function($scope, $location, galerieService, itemService, $routeParams, msg, $mdD
     };
     $scope.loadGalerie ($routeParams.galerieId);
 
-    $scope.saveGalerieItems = function (galerie) {
+    function getItemsForSection (items, section) {
+      var result = [];
+      if (items) {
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            if (item.sectionName == section.name) {
+              result.push(item);
+            }
+        }
+      }
+      return result;
+    }
+
+    $scope.saveGalleryItems = function (galerie) {
       //set items
+      var galleryItems = [];
       angular.forEach(galerie.sections, function(section) {
-        var galerieItems = [];
         angular.forEach(section.items, function(item) {
           var galerieItem = {
+            sectionName: section.name,
             position: item.position,
-            itemId: item.item.$id
+            itemId: item.item.id
           };
-          galerieItems.push(galerieItem);
+          galleryItems.push(galerieItem);
         });
         delete section.items;
-        section.galerieItems = galerieItems;
+
       });
+      galerie.galleryItems = galleryItems;
 
       //save the galerie
       galerieService.saveGalerie(galerie).then(function (response) {
@@ -113,7 +129,7 @@ function DialogController($scope, $mdDialog, itemService) {
   //mock searchresults
   $scope.allItems = [];
   itemService.loadItems().then(function(response){
-    if (response.status == 'ok') {
+    if (response.success) {
       $scope.allItems = response.data;
     } else {
       msg.error (response.status);

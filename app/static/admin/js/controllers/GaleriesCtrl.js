@@ -7,7 +7,7 @@ controller('GaleriesCtrl', ['$scope', '$location', 'galerieService', 'msg', '$md
 
   $scope.loadGaleries = function () {
     galerieService.loadGaleries().then(function(response){
-      if (response.status == 'ok') {
+      if (response.success) {
         $scope.galeries = response.data;
       } else {
         msg.error (response.status);
@@ -25,7 +25,7 @@ controller('GaleriesCtrl', ['$scope', '$location', 'galerieService', 'msg', '$md
   };
 
   $scope.editItems = function (galerie) {
-    $location.path('/galerieItems/' + galerie.$id);
+    $location.path('/galleryItems/' + galerie.id);
   };
 
   $scope.showBottomSheet = function(galerie, $event) {
@@ -48,7 +48,7 @@ controller('GaleriesCtrl', ['$scope', '$location', 'galerieService', 'msg', '$md
 
   $scope.deleteGalerie = function (galerie) {
     galerieService.removeGalerie(galerie).then(function(response){
-      if (response.status == 'ok') {
+      if (response.success) {
         $scope.loadGaleries();
       } else {
         msg.error (response.status);

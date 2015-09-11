@@ -24,7 +24,7 @@ kkModule.controller('KopfKulturController',
 
     $scope.loadGaleries = function () {
       galerieService.loadGaleries().then(function(response){
-        if (response.status == 'ok') {
+        if (response.success) {
           $scope.galeries = response.data;
         }
       });

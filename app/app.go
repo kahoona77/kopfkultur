@@ -50,11 +50,13 @@ func createApp() KopfKulturApp {
 type KopfKulturApp struct {
 	GalleryController *controllers.GalleryController `inject:""`
 	ItemController    *controllers.ItemController    `inject:""`
+	ImageController   *controllers.ImageController   `inject:""`
 }
 
 //AddControllers add all controllers of emerald to gin
 func (app *KopfKulturApp) AddControllers(router *gin.Engine) {
 	app.addController(router.Group("api/item"), app.ItemController)
+	app.addController(router.Group("api/image"), app.ImageController)
 	app.addController(router.Group("api/gallery"), app.GalleryController)
 }
 

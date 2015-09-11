@@ -1,56 +1,33 @@
 var app = angular.module("kka.services");
 
-app.factory('imageService', [ '$q',  function($q) {
+app.factory('imageService', [ '$http', '$log',  function($http, $log) {
 
-  var images = new Firebase("https://kopfkultur.firebaseio.com/images");
+  function returnData(response) {
+    return response.data;
+  }
+
+  function logException(error) {
+   $log.error('XHR Failed for imageService.' + error.data);
+  }
 
   return {
 
       loadImage: function (imageId) {
-        var p = $q.defer();
-        var ref = images.child(imageId);
-        ref.once("value", function(data) {
-          p.resolve({status: 'ok', data: data.val()});
-        });
-        return p.promise;
+        return $http.get('/api/image/load/?id=' + imageId)
+                .then(returnData)
+                .catch(logException);
       },
 
       saveImage: function (imageId, image) {
-        var p = $q.defer();
-
-        if (!imageId) {
-          var ref = images.push(image, function (err){
-            if (!err) {
-              p.resolve({status: 'ok', imageId: ref.key()});
-            } else {
-              p.resolve({status: 'Error while saving image', error: err});
-            }
-          });
-        } else {
-          var ref = images.child (imageId);
-          ref.set(image, function (err){
-            if (!err) {
-              p.resolve({status: 'ok', imageId: ref.key()});
-            } else {
-              p.resolve({status: 'Error while saving image', error: err});
-            }
-          });
-        }
-
-        return p.promise;
+        return $http.post('/api/image/save', {id: imageId, imageData: image})
+                .then(returnData)
+                .catch(logException);
       },
 
       removeImage: function (imageId) {
-        var p = $q.defer();
-        var ref = images.child(imageId);
-        ref.set(image, function (err){
-          if (!err) {
-            p.resolve({status: 'ok', imageId: ref.key()});
-          } else {
-            p.resolve({status: 'Error while removing image', error: err});
-          }
-        });
-        return p.promise;
+        return $http.delete('/api/image/delete/?id=' + imageId)
+                .then(returnData)
+                .catch(logException);
       }
   }
 }]);

@@ -1,10 +1,9 @@
 var app = angular.module("kka.services");
 
-app.factory('itemService', [ '$http',  function($http) {
+app.factory('itemService', [ '$http', '$log',  function($http, $log) {
 
   function returnData(response) {
-    var result = response.data;
-    return {status: 'ok', data: result.data};
+    return response.data;
   }
 
   function logException(error) {

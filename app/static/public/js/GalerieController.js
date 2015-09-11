@@ -73,7 +73,7 @@ GalerieController.prototype.getImage = function(imageId) {
 GalerieController.prototype.loadGalerie = function(galerieId) {
   var ctrl = this;
   this.galerieService.loadGalerie(galerieId).then(function(response){
-    if (response.status == 'ok') {
+    if (response.success) {
       ctrl.galerie = response.data;
       ctrl.createSections(ctrl.galerie);
     }
@@ -99,14 +99,14 @@ GalerieController.prototype.createItemRows = function(sec) {
   var ctrl  = this;
   var items = [];
   ctrl.items = {};
-  angular.forEach(sec.galerieItems, function(gi){
+  angular.forEach(sec.galleryItems, function(gi){
     var item = {
       position    : gi.position
     }
 
     //load Item
     ctrl.itemService.loadItem(gi.itemId).then(function(response){
-      if (response.status == 'ok') {
+      if (response.success) {
         var it = response.data;
         item.id = it.$id;
         item.name = it.name;

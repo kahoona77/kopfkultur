@@ -7,7 +7,7 @@ controller('GalerieEditCtrl', ['$scope', '$location', 'galerieService', '$routeP
 
   $scope.loadGalerie = function (galerieId) {
     galerieService.loadGalerie(galerieId).then(function(response){
-      if (response.status == 'ok') {
+      if (response.success) {
         $scope.galerie = response.data;
       } else {
         msg.error (response.status);

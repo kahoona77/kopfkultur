@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService', '$routeParams', '$upload', function($scope, $location, itemService, imageService, $routeParams, $upload) {
+controller('ItemEditCtrl', ['$scope', '$location', 'msg', 'itemService', 'imageService', '$routeParams', '$upload', function($scope, $location, msg, itemService, imageService, $routeParams, $upload) {
 
   $scope.item  = {};
   $scope.image = {};
@@ -20,8 +20,8 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService'
     context.drawImage(this, 0, 0, canvas.width, canvas.height);
 
     //create thump
-    thumbCanvas.width=140;
-    thumbCanvas.height=140;
+    thumbCanvas.width=64;
+    thumbCanvas.height=64;
     thumbCtx.drawImage(this, 0, 0, thumbCanvas.width, thumbCanvas.height);
 
     $scope.$apply(function(scope) {
@@ -34,12 +34,12 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService'
   $scope.loadItem = function (itemId) {
     if (itemId) {
       itemService.loadItem(itemId).then(function(response){
-        if (response.status == 'ok') {
+        if (response.success) {
           $scope.item = response.data;
 
           //load image
-          imageService.loadImage($scope.item.imageId).then (function (response){
-            $scope.image = response.data;
+          imageService.loadImage($scope.item.id).then (function (response){
+            $scope.image = response.data.imageData;
           });
 
         } else {
@@ -51,23 +51,26 @@ controller('ItemEditCtrl', ['$scope', '$location', 'itemService', 'imageService'
   $scope.loadItem ($routeParams.itemId);
 
   $scope.saveItem = function (item) {
-    //first save image
-    imageService.saveImage(item.imageId, $scope.image).then(function(res){
-      if (res.status == 'ok') {
-        item.imageId = res.imageId;
+    //first save item
+    itemService.saveItem(item).then(function (response) {
+      if (response.success) {
+        item = response.data;
+        //then save image
+        imageService.saveImage(item.id, $scope.image).then(function(res){
+          if (res.success) {
+            item.imageId = res.imageId;
 
-        //then save item
-        itemService.saveItem(item).then(function (response) {
-          if (response.status == 'ok') {
+
             $location.path('/items');
           } else {
-            msg.error(response.status);
+            msg.error(res.status);
           }
         });
       } else {
-        msg.error(res.status);
+        msg.error(response.status);
       }
     });
+
   };
 
   $scope.$watch('files', function(files) {

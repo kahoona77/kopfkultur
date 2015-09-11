@@ -10,5 +10,6 @@ rm -f go_appengine_sdk*
 # download SDK
 wget -q https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.25.zip
 unzip -oq go_appengine_sdk_linux_amd64-1.9.25.zip
-#echo "export GOPATH=/home/vagrant/go" >> /etc/profile
+echo "export GOPATH=/home/vagrant/go_appengine/gopath" >> /etc/profile
+echo "export GOROOT=/home/vagrant/go_appengine/goroot" >> /etc/profile
 echo "export PATH=$PATH:/home/vagrant/go_appengine" >> /etc/profile
