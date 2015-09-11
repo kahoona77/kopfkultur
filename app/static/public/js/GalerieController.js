@@ -60,7 +60,7 @@ GalerieController.prototype.getImage = function(imageId) {
   if (!image) {
     //load image
     ctrl.imageService.loadImage(imageId).then (function (response){
-      image = response.data;
+      image = response.data.imageData;
       ctrl.images[imageId] = image;
       deferred.resolve(image);
     });
@@ -89,17 +89,31 @@ GalerieController.prototype.createSections = function(galerie) {
       description : sec.description,
       position    : sec.position
     }
-    section.rows = ctrl.createItemRows(sec);
+    section.rows = ctrl.createItemRows(galerie.galleryItems, sec);
 
     ctrl.sections.push(section);
   });
 };
 
-GalerieController.prototype.createItemRows = function(sec) {
+function getItemsForSection (items, section) {
+  var result = [];
+  if (items) {
+    for (var i = 0; i < items.length; i++) {
+        var item = items[i];
+        if (item.sectionName == section.name) {
+          result.push(item);
+        }
+    }
+  }
+  return result;
+}
+
+GalerieController.prototype.createItemRows = function(galleryItems, sec) {
   var ctrl  = this;
   var items = [];
   ctrl.items = {};
-  angular.forEach(sec.galleryItems, function(gi){
+  var galleryItems = getItemsForSection(galleryItems, sec);
+  angular.forEach(galleryItems, function(gi){
     var item = {
       position    : gi.position
     }
@@ -108,11 +122,11 @@ GalerieController.prototype.createItemRows = function(sec) {
     ctrl.itemService.loadItem(gi.itemId).then(function(response){
       if (response.success) {
         var it = response.data;
-        item.id = it.$id;
+        item.id = it.id;
         item.name = it.name;
         item.description = it.description;
         item.thumb = it.thumb;
-        item.imageId = it.imageId;
+        item.imageId = it.id;
 
         ctrl.items[item.id] = item;
       }

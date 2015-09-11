@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('kka.controllers').
-controller('ItemEditCtrl', ['$scope', '$location', 'msg', 'itemService', 'imageService', '$routeParams', '$upload', function($scope, $location, msg, itemService, imageService, $routeParams, $upload) {
+controller('ItemEditCtrl', ['$scope', '$location', 'msg', 'itemService', 'imageService', '$routeParams',  function($scope, $location, msg, itemService, imageService, $routeParams) {
 
   $scope.item  = {};
   $scope.image = {};
@@ -20,8 +20,8 @@ controller('ItemEditCtrl', ['$scope', '$location', 'msg', 'itemService', 'imageS
     context.drawImage(this, 0, 0, canvas.width, canvas.height);
 
     //create thump
-    thumbCanvas.width=64;
-    thumbCanvas.height=64;
+    thumbCanvas.width=140;
+    thumbCanvas.height=140;
     thumbCtx.drawImage(this, 0, 0, thumbCanvas.width, thumbCanvas.height);
 
     $scope.$apply(function(scope) {
@@ -73,18 +73,38 @@ controller('ItemEditCtrl', ['$scope', '$location', 'msg', 'itemService', 'imageS
 
   };
 
-  $scope.$watch('files', function(files) {
-    if (files && files.length == 1) {
-      var image = files[0];
-      var reader= new FileReader();
-      reader.onload = function(e) {
-         var img = new Image();
-         img.onload = loadImage;
-         img.src = e.target.result;
-      };
-      reader.readAsDataURL(image);
+  function handleFileSelect(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    var files = evt.target.files; // FileList object
 
+    if (!files) {
+      files = evt.dataTransfer.files;
     }
-  });
+
+    $scope.$apply(function() {
+      if (files && files.length == 1) {
+        var image = files[0];
+        var reader= new FileReader();
+        reader.onload = function(e) {
+           var img = new Image();
+           img.onload = loadImage;
+           img.src = e.target.result;
+        };
+        reader.readAsDataURL(image);
+      }
+    });
+  }
+
+  function handleDragOver(evt) {
+    evt.stopPropagation();
+    evt.preventDefault();
+    evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+  var fileDrop = document.getElementById('fileDrop');
+  fileDrop.addEventListener('dragover', handleDragOver, false);
+  fileDrop.addEventListener('drop', handleFileSelect, false);
 
 }]);

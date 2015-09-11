@@ -29,16 +29,15 @@
         <div layout="row">
           <h4>Bild</h4>
         </div>
-        <div id="fileDrop" ng-file-drop ng-file-select ng-model="files" ng-model-rejected="rejFiles"
-        drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}"
-        class="drop-box" ng-multiple="false" allow-dir="true" ng-accept="'image/*'">
-            <img class="drop-box-img" ng-src="{{image}}" />
-            <div class="drop-box-overlay">
-              <p>Bilder hier ablegen</p>
-              <p>oder</p>
-              <p>Klicken zum Auswählen</p>
-            </div>
+        <div id="fileDrop" class="drop-box">
+          <img class="drop-box-img" ng-src="{{image}}" />
+          <div class="drop-box-overlay">
+            <p>Bilder hier ablegen</p>
+            <p>oder</p>
+            <p>Klicken zum Auswählen</p>
           </div>
+        </div>
+        <input type="file" id="files" name="files[]" class="file-input"/>
       </md-content>
     </form>
   </md-content>

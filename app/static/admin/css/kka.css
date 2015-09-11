@@ -113,3 +113,12 @@ a {
 .drop-box.dragover-err {
   border: 5px dashed red;
 }
+
+.file-input {
+  position: relative;
+  height: 480px;
+  top: -480px;
+  width: 100%;
+  opacity: 0;
+  filter: alpha(opacity: 0);
+}
