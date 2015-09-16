@@ -6,11 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kahoona77/kopfkultur/models"
 
-	"appengine"
-	"appengine/datastore"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 )
 
-func defaultKey(c appengine.Context, kind string) *datastore.Key {
+func defaultKey(c context.Context, kind string) *datastore.Key {
 	return datastore.NewKey(c, kind, "default_"+kind, 0, nil)
 }
 
